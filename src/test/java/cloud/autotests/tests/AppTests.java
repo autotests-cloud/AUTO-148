@@ -1,9 +1,11 @@
 package cloud.autotests.tests;
 
+
 import io.qameta.allure.Description;
 import org.junit.jupiter.api.*;
 
 import static cloud.autotests.helpers.DriverHelper.getConsoleLogs;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 import static io.qameta.allure.Allure.step;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -15,15 +17,16 @@ public class AppTests extends TestBase {
     @DisplayName("Проверка работы сайта rbc.ru")
     void generatedTest() {
         step("Открыть сайт https://rbc.ru", () -> {
-            // todo
+            open("https://rbc.ru");
         });
 
         step("Найти и нажать копку \"Скрыть баннеры\"", () -> {
-            // todo
+            $x("//a[text()='Скрыть баннеры']")
+                    .waitUntil(visible, 10000).click();;
         });
 
         step("Проверить что на открытой странице есть кнопка с текстом \"Зарегистрироваться\"", () -> {
-            // todo
+            $x("//input[@value='Зарегистрироваться']").should(exist);
         });
     }
 
@@ -32,7 +35,7 @@ public class AppTests extends TestBase {
     @DisplayName("Page title should have header text")
     void titleTest() {
         step("Open url 'https://rbc.ru'", () ->
-            open("https://rbc.ru"));
+                open("https://rbc.ru"));
 
         step("Page title should have text 'Новости дня в России и мире — РБК'", () -> {
             String expectedTitle = "Новости дня в России и мире — РБК";
@@ -47,7 +50,7 @@ public class AppTests extends TestBase {
     @DisplayName("Page console log should not have errors")
     void consoleShouldNotHaveErrorsTest() {
         step("Open url 'https://rbc.ru'", () ->
-            open("https://rbc.ru"));
+                open("https://rbc.ru"));
 
         step("Console logs should not contain text 'SEVERE'", () -> {
             String consoleLogs = getConsoleLogs();
